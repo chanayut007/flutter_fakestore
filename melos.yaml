@@ -1,0 +1,4 @@
+name: my_fakestore_app
+
+packages:
+  - features/**
