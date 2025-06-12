@@ -43,4 +43,4 @@ app.*.map.json
 /android/app/release
 
 build/
-.pubspec.lock
+pubspec.lock
