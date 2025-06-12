@@ -23,7 +23,7 @@ jobs:
         run: flutter pub get
 
       - name: 🧱 Build Flutter Web
-        run: flutter build web
+        run: flutter build web --release
 
       - name: 📦 Upload web build as artifact
         uses: actions/upload-artifact@v4
@@ -54,9 +54,6 @@ jobs:
           VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
           VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
         run: |
-          vercel deploy --prod \
-            --token $VERCEL_TOKEN \
-            --confirm \
-            --org-id $VERCEL_ORG_ID \
-            --project-id $VERCEL_PROJECT_ID \
-            --cwd build/web
+          cd build/web
+          vercel --prod --token $VERCEL_TOKEN --confirm --project $VERCEL_PROJECT_ID --org $VERCEL_ORG_ID
+          echo "Deployment to Vercel completed successfully!"
