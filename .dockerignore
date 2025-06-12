@@ -1,0 +1,5 @@
+build/
+.flutter-plugins
+.dart_tool/
+.packages
+.pub-cache/
