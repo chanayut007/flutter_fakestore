@@ -44,7 +44,7 @@ class WelcomeScreen extends StatelessWidget {
                   SizedBox(
                     width: double.infinity,
                     child: ElevatedButton(
-                      onPressed: () => Navigator.push(
+                      onPressed: () => Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
                               builder: (context) => const HomeScreen())),
@@ -54,6 +54,7 @@ class WelcomeScreen extends StatelessWidget {
                         ),
                         textStyle: TextStyle(
                           fontSize: isLargeScreen ? 22 : 18,
+                          color: Theme.of(context).colorScheme.onSecondary,
                         ),
                       ),
                       child: const Text('Click to be continued'),
