@@ -19,11 +19,11 @@ jobs:
         with:
           flutter-version: '3.24.4'
 
-      - name: 🧹 Clean Flutter cache
-        run: flutter clean
-
       - name: 📥 Install Melos
         run: dart pub global activate melos
+
+      - name: 🧹 Clean Flutter cache with Melos
+        run: melos clean --flutter
 
       - name: 📥 Install dependencies with Melos
         run: melos bootstrap
