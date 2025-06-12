@@ -14,6 +14,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
@@ -27,20 +28,16 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
         scaffoldBackgroundColor: const Color(0xFFEDF7F6),
         appBarTheme: const AppBarTheme(
-          backgroundColor: Color(0xFFEDF7F6), // secondary color
-          iconTheme: IconThemeData(
-            color: Colors.transparent, // hides the back button icon
-          ),
-        ),
-        textTheme: ThemeData.light().textTheme.apply(
-              bodyColor: Colors.black,
-              displayColor: Colors.black,
+            backgroundColor: Color(0xFFEDF7F6), // secondary color
+            iconTheme: IconThemeData(
+              color: Colors.transparent, // hides the back button icon
             ),
+            elevation: 0),
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
             backgroundColor: const Color(0xFF2660A4),
             foregroundColor: Colors.black,
-            textStyle: const TextStyle(color: Colors.black),
+            textStyle: const TextStyle(color: Colors.white),
           ),
         ),
         inputDecorationTheme: const InputDecorationTheme(

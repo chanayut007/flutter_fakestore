@@ -5,7 +5,9 @@ import 'package:http/http.dart' as http;
 
 // Main Cart Screen
 class CartScreen extends StatefulWidget {
-  const CartScreen({Key? key}) : super(key: key);
+  final String baseUrl;
+  const CartScreen({Key? key, this.baseUrl = 'https://fakestoreapi.com'})
+      : super(key: key);
 
   @override
   State<CartScreen> createState() => _CartScreenState();
@@ -21,8 +23,7 @@ class _CartScreenState extends State<CartScreen> {
   }
 
   Future<List<Cart>> fetchCarts() async {
-    final response =
-        await http.get(Uri.parse('https://fakestoreapi.com/carts'));
+    final response = await http.get(Uri.parse('${widget.baseUrl}/carts'));
     if (response.statusCode == 200) {
       final List data = json.decode(response.body);
       return data.map((e) => Cart.fromJson(e)).toList();
@@ -33,7 +34,7 @@ class _CartScreenState extends State<CartScreen> {
 
   Future<User> fetchUser(int userId) async {
     final response =
-        await http.get(Uri.parse('https://fakestoreapi.com/users/$userId'));
+        await http.get(Uri.parse('${widget.baseUrl}/users/$userId'));
     if (response.statusCode == 200) {
       return User.fromJson(json.decode(response.body));
     } else {
@@ -42,8 +43,8 @@ class _CartScreenState extends State<CartScreen> {
   }
 
   Future<Product> fetchProduct(int productId) async {
-    final response = await http
-        .get(Uri.parse('https://fakestoreapi.com/products/$productId'));
+    final response =
+        await http.get(Uri.parse('${widget.baseUrl}/products/$productId'));
     if (response.statusCode == 200) {
       return Product.fromJson(json.decode(response.body));
     } else {
@@ -98,6 +99,7 @@ class _CartScreenState extends State<CartScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Cart List'),
+        centerTitle: MediaQuery.of(context).size.width <= 600,
       ),
       body: FutureBuilder<List<UserCartData>>(
         future: _userCartDataFuture,
@@ -129,14 +131,14 @@ class _CartScreenState extends State<CartScreen> {
                     '${userData.user.firstname} ${userData.user.lastname}',
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
-                      color: Theme.of(context).colorScheme.onSecondary,
+                      color: Theme.of(context).colorScheme.primary,
                       fontSize: 18,
                     ),
                   ),
                   subtitle: Text(
                     userData.user.email,
                     style: TextStyle(
-                      color: Theme.of(context).colorScheme.onSecondary,
+                      color: Theme.of(context).colorScheme.primary,
                       fontSize: 16,
                     ),
                   ),

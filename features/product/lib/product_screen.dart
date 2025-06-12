@@ -4,7 +4,9 @@ import 'package:http/http.dart' as http;
 import 'package:product/product_model.dart';
 
 class ProductScreen extends StatefulWidget {
-  const ProductScreen({Key? key}) : super(key: key);
+  final String baseUrl;
+  const ProductScreen({Key? key, this.baseUrl = 'https://fakestoreapi.com'})
+      : super(key: key);
 
   @override
   State<ProductScreen> createState() => _ProductScreenState();
@@ -14,8 +16,7 @@ class _ProductScreenState extends State<ProductScreen> {
   late Future<List<Product>> _productsFuture;
 
   Future<List<Product>> fetchProducts() async {
-    final response =
-        await http.get(Uri.parse('https://fakestoreapi.com/products'));
+    final response = await http.get(Uri.parse('${widget.baseUrl}/products'));
     if (response.statusCode == 200) {
       final List<dynamic> jsonList = json.decode(response.body);
       return jsonList.map((jsonItem) => Product.fromJson(jsonItem)).toList();

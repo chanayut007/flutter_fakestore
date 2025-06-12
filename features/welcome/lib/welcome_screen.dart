@@ -53,9 +53,8 @@ class WelcomeScreen extends StatelessWidget {
                           vertical: isLargeScreen ? 20 : 16,
                         ),
                         textStyle: TextStyle(
-                          fontSize: isLargeScreen ? 22 : 18,
-                          color: Theme.of(context).colorScheme.onSecondary,
-                        ),
+                            fontSize: isLargeScreen ? 22 : 18,
+                            color: Colors.white),
                       ),
                       child: const Text('Click to be continued'),
                     ),
