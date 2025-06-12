@@ -19,11 +19,11 @@ jobs:
         with:
           flutter-version: '3.24.4'
 
+      - name: 🧹 Clear Git Pub Cache (for latest git dependencies)
+        run: rm -rf ~/.pub-cache/git
+
       - name: 📥 Install Melos
         run: dart pub global activate melos
-
-      - name: 🧹 Clean Flutter cache with Melos
-        run: melos clean --flutter
 
       - name: 📥 Install dependencies with Melos
         run: melos bootstrap
