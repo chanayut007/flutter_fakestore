@@ -1,6 +1,10 @@
+import 'dart:convert';
+
 import 'package:cart/cart_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_fake_user_package/user_screen.dart';
+import 'package:get_it/get_it.dart';
+import 'package:home/home_model.dart';
 import 'package:product/product_screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -13,11 +17,34 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   int _selectedIndex = 0;
 
-  static final List<Widget> _pages = <Widget>[
-    const ProductScreen(),
-    const CartScreen(),
-    const UserScreen()
-  ];
+  late String baseUrl;
+
+  late List<HomeModel> _homeModels;
+
+  @override
+  void initState() {
+    baseUrl = GetIt.I<String>();
+
+    _homeModels = [
+      HomeModel(
+        title: 'Products',
+        page: ProductScreen(baseUrl: baseUrl),
+        icon: const Icon(Icons.store),
+      ),
+      HomeModel(
+        title: 'Cart',
+        page: CartScreen(baseUrl: baseUrl),
+        icon: const Icon(Icons.shopping_cart),
+      ),
+      HomeModel(
+        title: 'User',
+        page: UserScreen(baseUrl: baseUrl),
+        icon: const Icon(Icons.person),
+      ),
+    ];
+
+    super.initState();
+  }
 
   void _onItemTapped(int index) {
     setState(() {
@@ -32,59 +59,44 @@ class _HomeScreenState extends State<HomeScreen> {
         children: [
           if (MediaQuery.of(context).size.width > 600) ...[
             NavigationRail(
-              selectedIndex: _selectedIndex,
-              onDestinationSelected: _onItemTapped,
-              labelType: NavigationRailLabelType.all,
-              backgroundColor: Theme.of(context).colorScheme.secondary,
-              selectedIconTheme: IconThemeData(
-                color: Theme.of(context).colorScheme.primary,
-              ),
-              useIndicator: false,
-              selectedLabelTextStyle: TextStyle(
-                color: Theme.of(context).colorScheme.primary,
-                fontWeight: FontWeight.bold,
-              ),
-              destinations: const [
-                NavigationRailDestination(
-                  icon: Icon(Icons.store),
-                  label: Text('Products'),
+                selectedIndex: _selectedIndex,
+                onDestinationSelected: _onItemTapped,
+                labelType: NavigationRailLabelType.all,
+                backgroundColor: Theme.of(context).colorScheme.secondary,
+                selectedIconTheme: IconThemeData(
+                  color: Theme.of(context).colorScheme.primary,
                 ),
-                NavigationRailDestination(
-                  icon: Icon(Icons.shopping_cart),
-                  label: Text('Cart'),
+                useIndicator: false,
+                selectedLabelTextStyle: TextStyle(
+                  color: Theme.of(context).colorScheme.primary,
+                  fontWeight: FontWeight.bold,
                 ),
-                NavigationRailDestination(
-                  icon: Icon(Icons.person),
-                  label: Text('User'),
-                ),
-              ],
-            ),
+                destinations: _homeModels
+                    .map(
+                      (model) => NavigationRailDestination(
+                        icon: model.icon,
+                        label: Text(model.title),
+                      ),
+                    )
+                    .toList()),
             const VerticalDivider(thickness: 1, width: 1),
           ],
           Expanded(
             child: IndexedStack(
               index: _selectedIndex,
-              children: _pages,
+              children: _homeModels.map((model) => model.page).toList(),
             ),
           )
         ],
       ),
       bottomNavigationBar: MediaQuery.of(context).size.width <= 600
           ? BottomNavigationBar(
-              items: const [
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.store),
-                  label: 'Products',
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.shopping_cart),
-                  label: 'Cart',
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.person),
-                  label: 'User',
-                ),
-              ],
+              items: _homeModels
+                  .map((model) => BottomNavigationBarItem(
+                        icon: model.icon,
+                        label: model.title,
+                      ))
+                  .toList(),
               currentIndex: _selectedIndex,
               onTap: _onItemTapped,
             )
