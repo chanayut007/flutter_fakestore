@@ -1,4 +1,7 @@
 {
   "project": "fakestore",
-  "outputDirectory": "build/web"
+  "outputDirectory": "build/web",
+  "git": {
+    "deploymentEnabled": false
+}
 }
