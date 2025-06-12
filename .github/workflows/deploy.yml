@@ -19,10 +19,11 @@ jobs:
         with:
           flutter-version: '3.24.4'
 
-      - name: 📥 Install dependencies
-        run: |
-        - dart pub global activate melos
-        - melos bootstrap --no-pub
+      - name: 📥 Install Melos
+        run: dart pub global activate melos
+
+      - name: 📥 Install dependencies with Melos
+        run: melos bootstrap
 
       - name: 🧱 Build Flutter Web
         run: flutter build web --release
