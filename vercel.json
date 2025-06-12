@@ -1,6 +1,5 @@
 {
   "project": "fakestore",
-  "org": "Chanayut Pharathong",
   "buildCommand": "flutter build web --release",
   "outputDirectory": "build/web"
 }
