@@ -1,5 +1,4 @@
 {
   "project": "fakestore",
-  "buildCommand": "flutter build web --release",
   "outputDirectory": "build/web"
 }
